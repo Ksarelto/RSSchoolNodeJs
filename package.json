@@ -1,0 +1,23 @@
+{
+  "name": "ciphercli",
+  "version": "1.0.0",
+  "description": "cipher",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint modules/."
+  },
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "chalk": "^4.1.2"
+  },
+  "devDependencies": {
+    "eslint": "^8.2.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-prettier": "^4.0.0",
+    "prettier": "^2.4.1"
+  }
+}
