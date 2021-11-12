@@ -4,7 +4,8 @@
   "description": "cipher",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint modules/."
+    "lint": "eslint modules/.",
+    "prettier": "prettier -w modules/."
   },
   "author": "",
   "license": "ISC",
