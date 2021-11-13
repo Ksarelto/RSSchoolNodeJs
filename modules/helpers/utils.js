@@ -11,6 +11,11 @@ export const setErrorsMessage = (err) => {
 
 export const validateCommandLine = (args) => {
   try {
+    if (!args) {
+      throw new ValidationErrors(
+        'Config string is empty, please ,use correct one, like "C0-R1-A"'
+      );
+    }
     const res = args.split('-');
     res.forEach((arg) => {
       if (arg.length > 2)
