@@ -1,6 +1,6 @@
 # Ciphering CLI Tool
 
-It is an application of command line. It is tool that encode and decode ONLY laters of latin alphabet by 3 substitution ciphers: Casear, ROT-8, Atbash. All other symbols remain unchanged. Application use package 'Chalk' to highliht Errors and only for this.
+It is an application of command line. It is tool that encode and decode ONLY laters of latin alphabet by 3 substitution ciphers: Casear, ROT-8, Atbash. All other symbols remain unchanged.
 
 ## Instalation
 
