@@ -1,21 +1,11 @@
 import { ValidationErrors } from './userErrors.js';
-import chalk from 'chalk';
 import process from 'process';
+import { regExArgs } from './constVariables.js';
 
 export const setErrorsMessage = (err) => {
-  if (err.name === 'ValidationErrors') {
-    process.stderr.write(
-      chalk.bold.bgHex('#853c0f')(
-        `Error name: ${err.name} \nError message: ${err.message}`
-      )
-    );
-  } else {
-    process.stderr.write(
-      chalk.bold.bgRed(
-        `Error name: ${err.name} \nError message: ${err.message}`
-      )
-    );
-  }
+  process.stderr.write(
+    `Error name: ${err.name} \nError message: ${err.message}`
+  );
   process.exit(9);
 };
 
@@ -32,7 +22,7 @@ export const validateCommandLine = (args) => {
           'Use ciphers code 0 or 1, like "C0-R1-A", don`t use code with "A" '
         );
       }
-      if (!arg.match(/[CR][01]{1}/g) && arg !== 'A')
+      if (!arg.match(regExArgs) && arg !== 'A')
         throw new ValidationErrors(
           'Use ciphers codes "C,R,A" in upper case, like "C0-R1-A", don`t use code with "A" '
         );
