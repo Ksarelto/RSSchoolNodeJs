@@ -1,0 +1,38 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true,
+        "node": true
+      },
+      "extends": [
+        "eslint:recommended",
+        "plugin:prettier/recommended",
+        "prettier"
+      ],
+      "parserOptions": {
+        "sourceType": "module"
+      },
+      "plugins": ["prettier"],
+      "rules": {
+        "no-plusplus": "off",
+        "no-console": "warn",
+        "max-len": [
+          "warn", {
+            "code": 120
+          }
+        ],
+        "import/prefer-default-export": "off",
+        "no-param-reassign": [
+          "error", {
+            "props": false
+          }
+        ],
+        "prettier/prettier": [
+          "error", {
+            "endOfLine": "auto",
+            "singleQuote": true, 
+            "parser": "flow"
+          }
+        ]
+      }
+}
