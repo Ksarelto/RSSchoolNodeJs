@@ -16,8 +16,6 @@ export const cipherCasearEncoding = (str, cipher, mode) => {
 
   return strArray
     .map((word) => {
-      if (word === '') return word;
-
       return word
         .split('')
         .map((char) => {
@@ -53,8 +51,6 @@ export const cipherAtbashEncoding = (str) => {
   const strArray = str.split('');
   return strArray
     .map((word) => {
-      if (word === '') return word;
-
       return word
         .split('')
         .map((char) => {
