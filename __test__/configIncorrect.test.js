@@ -29,43 +29,42 @@ const responsesMessages = {
     'Use ciphers code 0 or 1, like "C0-R1-A", don`t use code with "A"',
 };
 
+const errorScenarios = {
+  duplicated: 'index.js -c C0-C1-A -i input.txt -o output.txt -c',
+  missConfig: 'index.js C0-C1-A -i input.txt -o output.txt',
+  inputPathIncorrect: 'index.js --config C0-C1-A -i input.tt -o output.txt',
+  outPathIncorrect: 'index.js --config C0-C1-A -i input.txt -o outp.tt',
+  incorrectConfig:
+    'index.js --config C2-R3-A --input input.txt --output output.txt',
+};
+
 describe('Input errors of CLI', () => {
   test('should get error message after duplicate options', async () => {
-    const response = await spawnErrorProcess(
-      'index.js -c C0-C1-A -i input.txt -o output.txt -c'
-    );
+    const response = await spawnErrorProcess(errorScenarios.duplicated);
     expect(response.includes(responsesMessages.duplicated)).not.toBeFalsy();
   });
 
   test('should get error message when forget to enter -c option', async () => {
-    const response = await spawnErrorProcess(
-      'index.js C0-C1-A -i input.txt -o output.txt'
-    );
+    const response = await spawnErrorProcess(errorScenarios.missConfig);
     expect(response.includes(responsesMessages.empty)).not.toBeFalsy();
   });
 
   test('should get error message when enter incorrect input file path', async () => {
-    const response = await spawnErrorProcess(
-      'index.js --config C0-C1-A -i input.tt -o output.txt'
-    );
+    const response = await spawnErrorProcess(errorScenarios.inputPathIncorrect);
     expect(
       response.includes(responsesMessages.inputRespNotExist)
     ).not.toBeFalsy();
   });
 
   test('should get error message when enter incorrect output file path', async () => {
-    const response = await spawnErrorProcess(
-      'index.js --config C0-C1-A -i input.txt -o outp.tt'
-    );
+    const response = await spawnErrorProcess(errorScenarios.outPathIncorrect);
     expect(
       response.includes(responsesMessages.outputRespNotExist)
     ).not.toBeFalsy();
   });
 
   test('should get error message when enter incorrect config arguments', async () => {
-    const response = await spawnErrorProcess(
-      'index.js --config C2-R3-A --input input.txt --output output.txt'
-    );
+    const response = await spawnErrorProcess(errorScenarios.incorrectConfig);
     expect(response.includes(responsesMessages.useCipherCode)).not.toBeFalsy();
   });
 });
