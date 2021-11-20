@@ -1,6 +1,7 @@
 import { ValidationErrors } from './userErrors.js';
 import process from 'process';
 import { regExArgs } from './constVariables.js';
+import { CONFIG, INPUT, OUTPUT } from './constVariables.js';
 
 export const setErrorsMessage = (err) => {
   process.stderr.write(
@@ -36,4 +37,14 @@ export const validateCommandLine = (args) => {
   } catch (err) {
     setErrorsMessage(err);
   }
+};
+
+export const checkOptions = (arg) => {
+  return INPUT.includes(arg)
+    ? INPUT
+    : OUTPUT.includes(arg)
+    ? OUTPUT
+    : CONFIG.includes(arg)
+    ? CONFIG
+    : null;
 };
