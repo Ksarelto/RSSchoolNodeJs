@@ -31,6 +31,12 @@
       "**/modules/**/*.{js,jsx}",
       "!**/node_modules/**",
       "!**/coverage/**"
-    ]
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 85,
+        "lines": 70
+      }
+    }
   }
 }
