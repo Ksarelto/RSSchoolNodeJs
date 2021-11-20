@@ -1,6 +1,5 @@
 import { spawn } from 'child_process';
 import fs from 'fs';
-import { jest } from '@jest/globals';
 
 const spawnCorrectProcess = (command) => {
   return new Promise((resolve, reject) => {
@@ -35,36 +34,39 @@ const correctScenarios = {
   fourth:
     'index.js -c C1-R1-C0-C0-A-R0-R1-R1-A-C1 -i ./input.txt -o ./output.txt',
 };
-const clearData = jest.fn(() => {
+const clearData = () => {
   try {
     fs.writeFileSync('output.txt', '', { encoding: 'utf-8', flag: 'r' });
   } catch (err) {
     console.error(err);
   }
-});
+};
 
 describe('Correct tests of CLI', () => {
+  beforeAll(() => {
+    clearData();
+  });
+  afterAll(() => {
+    clearData();
+  });
+
   test('should show correct output with args C1-C1-R0-A -i', async () => {
     const response = await spawnCorrectProcess(correctScenarios.first);
     expect(response).toMatch(responseStrings['C1-C1-R0-A']);
-    clearData();
   });
 
   test('should show correct output with args C1-C0-A-R1-R0-A-R0-R0-C1-A', async () => {
     const response = await spawnCorrectProcess(correctScenarios.second);
     expect(response).toMatch(responseStrings['C1-C0-A-R1-R0-A-R0-R0-C1-A']);
-    clearData();
   });
 
   test('should show correct output with args A-A-A-R1-R0-R0-R0-C1-C1-A', async () => {
     const response = await spawnCorrectProcess(correctScenarios.third);
     expect(response).toMatch(responseStrings['A-A-A-R1-R0-R0-R0-C1-C1-A']);
-    clearData();
   });
 
   test('should show correct output with args C1-R1-C0-C0-A-R0-R1-R1-A-C1', async () => {
     const response = await spawnCorrectProcess(correctScenarios.fourth);
     expect(response).toMatch(responseStrings['C1-R1-C0-C0-A-R0-R1-R1-A-C1']);
-    clearData();
   });
 });
