@@ -22,9 +22,6 @@ const imitatePipeline = async (func, cipher = cipherCasear, mode = encrypt) => {
 };
 
 describe('test transform stream', () => {
-  afterAll(() => {
-    fs.writeFileSync('./output.txt', '', { encoding: 'utf-8', flag: 'r' });
-  });
   test('should throw exeption', async () => {
     testFunc.mockImplementation(() => {
       throw new Error('Test Error');
@@ -44,5 +41,6 @@ describe('test transform stream', () => {
     expect(res).toBeUndefined();
     const result = fs.readFileSync('./output.txt', 'utf-8');
     expect(result).not.toBe('This is secret. Message about "_" symbol!');
+    fs.writeFileSync('./output.txt', '', { encoding: 'utf-8', flag: 'r' });
   });
 });
