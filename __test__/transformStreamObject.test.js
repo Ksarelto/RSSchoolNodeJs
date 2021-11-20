@@ -22,6 +22,9 @@ const imitatePipeline = async (func, cipher = cipherCasear, mode = encrypt) => {
 };
 
 describe('test transform stream', () => {
+  afterAll(() => {
+    fs.writeFileSync('./output.txt', '', { encoding: 'utf-8', flag: 'r' });
+  });
   test('should throw exeption', async () => {
     testFunc.mockImplementation(() => {
       throw new Error('Test Error');
