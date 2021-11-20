@@ -3,6 +3,7 @@ import { jest } from '@jest/globals';
 
 const errorMessagesStrings = {
   primeErrorMessage: 'Error name: UsersErrors \nError message: ',
+  classError: 'Error name: Error \nError message: ',
   configEmpty:
     'Config string is empty, please ,use correct one, like "C0-R1-A"',
   tooLongArgument: 'Too long argument, use arguments like "C0-R1-A"',
@@ -11,7 +12,19 @@ const errorMessagesStrings = {
     'Use ciphers codes "C,R,A" in upper case, like "C0-R1-A", don`t use code with "A" ',
   inputNotExist: 'Input file is not exist',
   outputNotExist: 'Output file is not exist',
+  EPERM:
+    "EPERM: operation not permitted, open 'D:\\RSScool\\RSSchoolNode\\RSSchoolNodeJs\\ReadOnly.txt'",
 };
+
+const testSetCommandLineArgs = jest.fn();
+
+testSetCommandLineArgs
+  .mockReturnValueOnce(['input.txt', 'output.txt', 'C0-C1-A'])
+  .mockReturnValueOnce(['input.txt', undefined, 'C0-C1-R1'])
+  .mockReturnValueOnce([undefined, undefined, 'C0-C1-A'])
+  .mockReturnValueOnce(['input.tt', 'output.txt', 'C0-C1-A'])
+  .mockReturnValueOnce(['input.txt', 'output.t', 'C0-C1-A'])
+  .mockReturnValueOnce(['input.txt', 'ReadOnly.txt', 'C0-C1-A']);
 
 describe('Streams tests', () => {
   let errorMess;
@@ -23,19 +36,19 @@ describe('Streams tests', () => {
   });
 
   test('should return correct result', async () => {
-    const args = ['input.txt', 'output.txt', 'C0-C1-A'];
+    const args = testSetCommandLineArgs();
     await streamsPipe(...args);
     expect(errorMess).toHaveBeenCalledTimes(0);
   });
 
   test('should return incorrect result with undefined output file', async () => {
-    const args = ['input.txt', undefined, 'C0-C1-A'];
+    const args = testSetCommandLineArgs();
     await streamsPipe(...args);
     expect(errorMess).toHaveBeenCalledTimes(0);
   });
 
   test('should return incorrect result with undefined input and output files', async () => {
-    const args = [undefined, undefined, 'C0-C1-A'];
+    const args = testSetCommandLineArgs();
     const testStdin = async () => {
       streamsPipe(...args);
       process.stdin.write('hello');
@@ -45,7 +58,7 @@ describe('Streams tests', () => {
   });
 
   test('should return incorrect result with incorrect input file path', async () => {
-    const args = ['input.tt', 'output.txt', 'C0-C1-A'];
+    const args = testSetCommandLineArgs();
     await streamsPipe(...args);
     expect(errorMess).toHaveBeenCalledTimes(1);
     expect(errorMess).toHaveBeenCalledWith(
@@ -55,7 +68,7 @@ describe('Streams tests', () => {
   });
 
   test('should return incorrect result with incorrect output file path', async () => {
-    const args = ['input.txt', 'output.t', 'C0-C1-A'];
+    const args = testSetCommandLineArgs();
     await streamsPipe(...args);
     expect(errorMess).toHaveBeenCalledTimes(2);
     expect(errorMess).toHaveBeenCalledWith(
@@ -65,14 +78,11 @@ describe('Streams tests', () => {
   });
 
   test('should return incorrect result with blocked output file', async () => {
-    const args = ['input.txt', 'ReadOnly.txt', 'C0-C1-A'];
+    const args = testSetCommandLineArgs();
     await streamsPipe(...args);
     expect(errorMess).toHaveBeenCalledTimes(3);
-  });
-
-  test('should return incorrect result with blocked input file', async () => {
-    const args = ['WriteOnly.txt', 'output.txt', 'C0-C1-A-R1'];
-    await streamsPipe(...args);
-    expect(errorMess).toHaveBeenCalledTimes(4);
+    expect(errorMess).toHaveBeenCalledWith(
+      errorMessagesStrings.classError + errorMessagesStrings.EPERM
+    );
   });
 });
