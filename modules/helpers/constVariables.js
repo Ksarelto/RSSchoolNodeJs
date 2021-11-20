@@ -10,7 +10,10 @@ export const INPUT = ['-i', '--input'];
 export const OUTPUT = ['-o', '--output'];
 export const CONFIG = ['-c', '--config'];
 export const regExString = new RegExp('[a-z]', 'gi');
-export const regExOptions = new RegExp('^-{1,2}[ioc]', 'g');
+export const regExOptions = new RegExp(
+  '(^--input$)|(^--output$)|(^--config$)|(^-i$)|(^-o$)|(^-c$)',
+  'g'
+);
 export const regExArgs = new RegExp('[CR][01]{1}', 'g');
 export const cipherCasearStep = 1;
 export const cipherROT_8_Step = 8;
