@@ -38,7 +38,7 @@ const clearData = () => {
   try {
     fs.writeFileSync('output.txt', '', { encoding: 'utf-8', flag: 'r' });
   } catch (err) {
-    console.error(err);
+    console.info(err);
   }
 };
 
