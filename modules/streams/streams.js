@@ -14,13 +14,8 @@ export class myReadableStream extends Readable {
       throw new UsersErrors('Input file is not exist');
     }
     fs.open(this.filename, (err, fd) => {
-      if (err) {
-        callback(err);
-        setErrorsMessage(err);
-      } else {
-        this.fd = fd;
-        callback();
-      }
+      this.fd = fd;
+      callback();
     });
   }
   _read(n) {
