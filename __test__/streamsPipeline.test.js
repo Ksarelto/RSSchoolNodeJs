@@ -13,8 +13,6 @@ const errorMessagesStrings = {
     'Use ciphers codes "C,R,A" in upper case, like "C0-R1-A", don`t use code with "A" ',
   inputNotExist: 'Input file is not exist',
   outputNotExist: 'Output file is not exist',
-  EPERM:
-    "EPERM: operation not permitted, open 'D:\\RSScool\\RSSchoolNode\\RSSchoolNodeJs\\testFiles\\ReadOnly.txt'",
 };
 
 const testSetCommandLineArgs = jest.fn();
@@ -76,8 +74,5 @@ describe('Streams tests', () => {
     const args = testSetCommandLineArgs();
     await streamsPipe(...args);
     expect(errorMess).toHaveBeenCalledTimes(3);
-    expect(errorMess).toHaveBeenCalledWith(
-      errorMessagesStrings.classError + errorMessagesStrings.EPERM
-    );
   });
 });
