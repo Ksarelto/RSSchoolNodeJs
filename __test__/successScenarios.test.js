@@ -7,7 +7,7 @@ const spawnCorrectProcess = (command) => {
     const childProcess = spawn('node', [...args], { stdio: 'pipe' });
 
     childProcess.on('close', () => {
-      fs.readFile('output.txt', 'utf-8', (err, data) => {
+      fs.readFile('./testFiles/testOutput.txt', 'utf-8', (err, data) => {
         if (err) reject(new Error('Test failed'));
         resolve(data);
       });
@@ -27,27 +27,26 @@ const responseStrings = {
 };
 
 const correctScenarios = {
-  first: 'index.js -c C1-C1-R0-A -i ./input.txt -o ./output.txt',
+  first:
+    'index.js -c C1-C1-R0-A -i ./testFiles/testInput.txt -o ./testFiles/testOutput.txt',
   second:
-    'index.js -c C1-C0-A-R1-R0-A-R0-R0-C1-A -i ./input.txt -o ./output.txt',
-  third: 'index.js -c A-A-A-R1-R0-R0-R0-C1-C1-A -i ./input.txt -o ./output.txt',
+    'index.js -c C1-C0-A-R1-R0-A-R0-R0-C1-A -i ./testFiles/testInput.txt -o ./testFiles/testOutput.txt',
+  third:
+    'index.js -c A-A-A-R1-R0-R0-R0-C1-C1-A -i ./testFiles/testInput.txt -o ./testFiles/testOutput.txt',
   fourth:
-    'index.js -c C1-R1-C0-C0-A-R0-R1-R1-A-C1 -i ./input.txt -o ./output.txt',
-};
-const clearData = () => {
-  try {
-    fs.writeFileSync('output.txt', '', { encoding: 'utf-8', flag: 'r' });
-  } catch (err) {
-    console.info(err);
-  }
+    'index.js -c C1-R1-C0-C0-A-R0-R1-R1-A-C1 -i ./testFiles/testInput.txt -o ./testFiles/testOutput.txt',
 };
 
 describe('Correct tests of CLI', () => {
   beforeAll(() => {
-    clearData();
-  });
-  afterAll(() => {
-    clearData();
+    try {
+      fs.writeFileSync('./testFiles/testOutput.txt', '', {
+        encoding: 'utf-8',
+        flag: 'r',
+      });
+    } catch (err) {
+      console.error(err);
+    }
   });
 
   test('should show correct output with args C1-C1-R0-A -i', async () => {
