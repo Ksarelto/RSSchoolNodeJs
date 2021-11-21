@@ -1,0 +1,42 @@
+{
+  "name": "ciphercli",
+  "version": "1.0.0",
+  "description": "cipher",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint modules/.",
+    "prettier": "prettier -w modules/.",
+    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules npx jest",
+    "cover": "cross-env NODE_OPTIONS=--experimental-vm-modules npx jest --coverage"
+  },
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "devDependencies": {
+    "@types/jest": "^27.0.3",
+    "cross-env": "^7.0.3",
+    "eslint": "^8.2.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-jest": "^25.2.4",
+    "eslint-plugin-prettier": "^4.0.0",
+    "jest": "^27.3.1",
+    "prettier": "^2.4.1"
+  },
+  "jest": {
+    "verbose": true,
+    "transform": {},
+    "collectCoverageFrom": [
+      "**/modules/**/*.{js,jsx}",
+      "!**/node_modules/**",
+      "!**/coverage/**"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 85,
+        "lines": 70
+      }
+    }
+  }
+}
