@@ -31,9 +31,6 @@ For example, config "C1-C1-R0-A" means "encode by Caesar cipher => encode by Cae
 
 ## How to test application
 
-Before starting tests, you should find file './testFiles/ReadOnly.txt' , open its properties and set attribute 'Only for Reading'.
-(нужно найти файл './testFiles/ReadOnly.txt' в паке с приложением, открыть его свойства(нажав на правую кнопку мышки) и включить атрибут "Только для чтения").
-
 1. If you want to test the application you should to run in the terminal command: 'npm run test'.
 2. If you wnat to check tests the coverage you should to run in the terminal command: 'npm run cover'.
 

@@ -23,7 +23,6 @@ testSetCommandLineArgs
   .mockReturnValueOnce([undefined, undefined, 'C0-C1-A'])
   .mockReturnValueOnce(['input.tt', 'output.txt', 'C0-C1-A'])
   .mockReturnValueOnce(['input.txt', 'output.t', 'C0-C1-A'])
-  .mockReturnValueOnce(['input.txt', './testFiles/ReadOnly.txt', 'C0-C1-A']);
 
 describe('Streams tests', () => {
   jest.spyOn(process, 'exit').mockImplementation(() => {});
@@ -68,11 +67,5 @@ describe('Streams tests', () => {
       errorMessagesStrings.primeErrorMessage +
         errorMessagesStrings.outputNotExist
     );
-  });
-
-  test('should return incorrect result with blocked output file', async () => {
-    const args = testSetCommandLineArgs();
-    await streamsPipe(...args);
-    expect(errorMess).toHaveBeenCalledTimes(3);
   });
 });
