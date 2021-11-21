@@ -1,5 +1,6 @@
 import { streamsPipe } from '../modules/streams/streamsPipe.js';
 import { jest } from '@jest/globals';
+import fs from 'fs';
 
 const errorMessagesStrings = {
   primeErrorMessage: 'Error name: UsersErrors \nError message: ',
@@ -35,22 +36,19 @@ describe('Streams tests', () => {
   test('should return correct result', async () => {
     const args = testSetCommandLineArgs();
     await streamsPipe(...args);
+    fs.writeFileSync('output.txt', '');
     expect(errorMess).toHaveBeenCalledTimes(0);
   });
 
-  test('should return incorrect result with undefined output file', async () => {
+  test('should not throw err with undefined output file', async () => {
     const args = testSetCommandLineArgs();
     await streamsPipe(...args);
     expect(errorMess).toHaveBeenCalledTimes(0);
   });
 
-  test('should return incorrect result with undefined input and output files', async () => {
+  test('should not throw err  with undefined input and output files', async () => {
     const args = testSetCommandLineArgs();
-    const testStdin = async () => {
-      streamsPipe(...args);
-      process.stdin.write('hello');
-    };
-    await testStdin();
+    streamsPipe(...args);
     expect(errorMess).toHaveBeenCalledTimes(0);
   });
 
