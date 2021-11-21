@@ -13,7 +13,7 @@ const errorMessagesStrings = {
   inputNotExist: 'Input file is not exist',
   outputNotExist: 'Output file is not exist',
   EPERM:
-    "EPERM: operation not permitted, open 'D:\\RSScool\\RSSchoolNode\\RSSchoolNodeJs\\ReadOnly.txt'",
+    "EPERM: operation not permitted, open 'D:\\RSScool\\RSSchoolNode\\RSSchoolNodeJs\\testFiles\\ReadOnly.txt'",
 };
 
 const testSetCommandLineArgs = jest.fn();
@@ -24,16 +24,13 @@ testSetCommandLineArgs
   .mockReturnValueOnce([undefined, undefined, 'C0-C1-A'])
   .mockReturnValueOnce(['input.tt', 'output.txt', 'C0-C1-A'])
   .mockReturnValueOnce(['input.txt', 'output.t', 'C0-C1-A'])
-  .mockReturnValueOnce(['input.txt', 'ReadOnly.txt', 'C0-C1-A']);
+  .mockReturnValueOnce(['input.txt', './testFiles/ReadOnly.txt', 'C0-C1-A']);
 
 describe('Streams tests', () => {
-  let errorMess;
-  beforeEach(() => {
-    jest.spyOn(process, 'exit').mockImplementation(() => {});
-    errorMess = jest
-      .spyOn(process.stderr, 'write')
-      .mockImplementation(() => {});
-  });
+  jest.spyOn(process, 'exit').mockImplementation(() => {});
+  let errorMess = jest
+    .spyOn(process.stderr, 'write')
+    .mockImplementation(() => {});
 
   test('should return correct result', async () => {
     const args = testSetCommandLineArgs();
