@@ -12,14 +12,10 @@ const errorMessagesStrings = {
 };
 
 describe('Commandline validation', () => {
-  let errorMess;
-
-  beforeEach(() => {
-    jest.spyOn(process, 'exit').mockImplementation(() => {});
-    errorMess = jest
-      .spyOn(process.stderr, 'write')
-      .mockImplementation(() => {});
-  });
+  jest.spyOn(process, 'exit').mockImplementation(() => {});
+  let errorMess = jest
+    .spyOn(process.stderr, 'write')
+    .mockImplementation(() => {});
 
   test('should validate', () => {
     const args = 'C0-R1-A';
