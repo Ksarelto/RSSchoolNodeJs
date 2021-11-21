@@ -12,8 +12,8 @@ testFunc.mockImplementation(() => {
 
 const imitatePipeline = async (func, cipher = cipherCasear, mode = encrypt) => {
   try {
-    const read = fs.createReadStream('input.txt');
-    const write = fs.createWriteStream('output.txt');
+    const read = fs.createReadStream('./testFiles/testInput.txt');
+    const write = fs.createWriteStream('./testFiles/testOutput.txt');
     const transform = new myTransformStream(func, cipher, mode);
     await pipeline(read, transform, write);
   } catch (err) {
@@ -22,6 +22,17 @@ const imitatePipeline = async (func, cipher = cipherCasear, mode = encrypt) => {
 };
 
 describe('test transform stream', () => {
+  beforeAll(() => {
+    try {
+      fs.writeFileSync('./testFiles/testOutput.txt', '', {
+        encoding: 'utf-8',
+        flag: 'r',
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  });
+
   test('should throw exeption', async () => {
     testFunc.mockImplementation(() => {
       throw new Error('Test Error');
@@ -35,12 +46,10 @@ describe('test transform stream', () => {
     expect(res).toBeUndefined();
   });
   test('should return not default string', async () => {
-    fs.writeFileSync('./output.txt', '', { encoding: 'utf-8', flag: 'r' });
     testFunc.mockImplementation(cipherCasearEncoding);
     const res = await imitatePipeline(testFunc, 'Incorrect Cipher', 'WTF');
     expect(res).toBeUndefined();
-    const result = fs.readFileSync('./output.txt', 'utf-8');
+    const result = fs.readFileSync('./testFiles/testOutput.txt', 'utf-8');
     expect(result).not.toBe('This is secret. Message about "_" symbol!');
-    fs.writeFileSync('./output.txt', '', { encoding: 'utf-8', flag: 'r' });
   });
 });
