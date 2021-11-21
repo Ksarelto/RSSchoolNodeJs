@@ -22,7 +22,7 @@ testSetCommandLineArgs
   .mockReturnValueOnce(['input.txt', undefined, 'C0-C1-R1'])
   .mockReturnValueOnce([undefined, undefined, 'C0-C1-A'])
   .mockReturnValueOnce(['input.tt', 'output.txt', 'C0-C1-A'])
-  .mockReturnValueOnce(['input.txt', 'output.t', 'C0-C1-A'])
+  .mockReturnValueOnce(['input.txt', 'output.t', 'C0-C1-A']);
 
 describe('Streams tests', () => {
   jest.spyOn(process, 'exit').mockImplementation(() => {});
